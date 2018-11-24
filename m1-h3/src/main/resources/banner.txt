@@ -1,0 +1,11 @@
+${AnsiColor.BRIGHT_GREEN} $$$$$$\                      $$\
+${AnsiColor.BRIGHT_GREEN}$$  __$$\                     \__|
+${AnsiColor.BRIGHT_GREEN}$$ /  \__| $$$$$$\   $$$$$$\  $$\ $$$$$$$\   $$$$$$\
+${AnsiColor.BRIGHT_GREEN}\$$$$$$\  $$  __$$\ $$  __$$\ $$ |$$  __$$\ $$  __$$\
+${AnsiColor.BRIGHT_GREEN} \____$$\ $$ /  $$ |$$ |  \__|$$ |$$ |  $$ |$$ /  $$ |
+${AnsiColor.BRIGHT_GREEN}$$\   $$ |$$ |  $$ |$$ |      $$ |$$ |  $$ |$$ |  $$ |
+${AnsiColor.BRIGHT_GREEN}\$$$$$$  |$$$$$$$  |$$ |      $$ |$$ |  $$ |\$$$$$$$ |
+${AnsiColor.BRIGHT_GREEN} \______/ $$  ____/ \__|      \__|\__|  \__| \____$$ |
+${AnsiColor.BRIGHT_GREEN}          $$ |                              $$\   $$ |
+${AnsiColor.BRIGHT_GREEN}          $$ |                              \$$$$$$  |
+${AnsiColor.BRIGHT_GREEN}          \__|                               \______/

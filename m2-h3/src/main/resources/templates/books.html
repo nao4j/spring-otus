@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Книги</title>
+</head>
+<body>
+<div th:replace="fragments/navibar :: navibar">Навигация</div>
+<h1>Книги</h1>
+<ul th:each="book : ${books}">
+    <li>
+        <a th:href="@{/books/{id}(id=${book.id})}" th:text="${book.name}" href="book.html">Трудно быть богом</a>
+        <a th:href="@{/books/{id}/delete(id=${book.id})}" href="books.html">x</a>
+    </li>
+</ul>
+<a th:href="@{/books/add}" href="save.html">Добавить</a>
+</body>
+</html>

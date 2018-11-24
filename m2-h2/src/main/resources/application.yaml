@@ -1,0 +1,11 @@
+spring:
+  main:
+    banner-mode: log
+  data:
+    mongodb:
+      uri: ${OTUS_LIBRARY_MONGO_URI}
+logging:
+  level:
+    root: ERROR
+    console: OFF
+  file: debug.log

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Новая книга</title>
+</head>
+<body>
+<div th:replace="fragments/navibar :: navibar">Навигация</div>
+<h1>Новая книга</h1>
+<form id="save-book-form" th:action="@{/books/save}" action="#" method="post">
+    <div>
+        <label for="name-input">Название</label>
+        <input id="name-input" name="name"/>
+    </div>
+    <div>
+        <label for="authors-input">Авторы (через запятую)</label>
+        <input id="authors-input" name="authors"/>
+    </div>
+    <div>
+        <label for="genre-input">Жанр (через запятую)</label>
+        <input id="genre-input" name="genres"/>
+    </div>
+    <button type="submit">Сохранить</button>
+</form>
+</body>
+</html>

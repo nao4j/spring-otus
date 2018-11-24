@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Навигация</title>
+</head>
+<body>
+<table th:fragment="navibar">
+    <tr>
+        <td><a th:href="@{/books}" href="books.html">Книги</a></td>
+        <td><a th:href="@{/authors}" href="authors.html">Авторы</a></td>
+        <td><a th:href="@{/genres}" href="genres.html">Жанры</a></td>
+    </tr>
+</table>
+</body>
+</html>

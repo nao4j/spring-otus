@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторы</title>
+</head>
+<body>
+<div th:replace="fragments/navibar :: navibar">Навигация</div>
+<h1>Авторы</h1>
+<ul th:each="author : ${authors}">
+    <li th:text="${author.firstName} + ' ' + ${author.lastName}">Аркадий Стругацкий</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,15 @@
+spring:
+  main:
+    banner-mode: log
+  datasource:
+      url: ${LIBRARY_DB_URL}
+      username: ${LIBRARY_DB_USERNAME}
+      password: ${LIBRARY_DB_PASSWORD}
+      driver-class-name: org.postgresql.Driver
+  flyway:
+    schemas: otus_library
+logging:
+  level:
+    root: ERROR
+    console: OFF
+  file: debug.log

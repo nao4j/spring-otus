@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      uri: ${OTUS_LIBRARY_MONGO_URI}
+logging:
+  level:
+    root: DEBUG

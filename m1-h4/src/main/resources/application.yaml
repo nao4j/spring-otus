@@ -1,0 +1,11 @@
+locale: en_US
+csv:
+  questions: "classpath:csv/questions.csv"
+spring:
+  main:
+    banner-mode: log
+logging:
+  level:
+    root: ERROR
+    console: OFF
+  file: debug.log

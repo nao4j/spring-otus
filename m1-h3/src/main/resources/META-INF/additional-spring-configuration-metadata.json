@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "locale",
+      "type": "java.lang.String",
+      "description": "Language tag of application locale."
+    },
+    {
+      "name": "csv.questions",
+      "type": "java.lang.String",
+      "description": "CSV witch questions URI."
+    }
+  ]
+}

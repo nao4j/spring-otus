@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+  jpa:
+    hibernate:
+      ddl-auto: create
+  batch:
+    job:
+      enabled: false

@@ -1,0 +1,20 @@
+spring:
+  main:
+    banner-mode: log
+  datasource:
+      url: ${LIBRARY_DB_URL}
+      username: ${LIBRARY_DB_USERNAME}
+      password: ${LIBRARY_DB_PASSWORD}
+      driver-class-name: org.postgresql.Driver
+      initialization-mode: always
+  liquibase:
+    default-schema: otus_library
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  jpa:
+    hibernate:
+      ddl-auto: validate
+logging:
+  level:
+    root: ERROR
+    console: OFF
+  file: debug.log

@@ -1,0 +1,25 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+  jackson:
+    default-property-inclusion: NON_NULL
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+info:
+  app:
+    encoding: @project.build.sourceEncoding@
+    source: @java.version@
+    target: @java.version@
+  git:
+    mode: "FULL"
+logging:
+  level:
+    root: DEBUG
+  file: "log/debug.log"

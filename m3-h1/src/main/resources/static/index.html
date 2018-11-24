@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог книг</title>
+    <link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">Каталог книг</a>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Книги <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="authors.html">Авторы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="genres.html">Жанры</a>
+                </li>
+            </ul>
+            <a class="nav-link" href="/logout">Выход</a>
+        </div>
+    </nav>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Название</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody id="books-list">
+        </tbody>
+    </table>
+    <button id="create-book" type="button" class="btn btn-primary">
+        Добавить
+    </button>
+    <div class="modal fade"
+         id="exampleModal"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Новая книга</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="book-id" class="col-form-label">Идентификатор</label>
+                            <input type="text" class="form-control" disabled=true id="book-id">
+                        </div>
+                        <div class="form-group">
+                            <label for="book-name" class="col-form-label">Название</label>
+                            <input type="text" class="form-control is-invalid" id="book-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="book-authors" class="col-form-label">Авторы (через запятую)</label>
+                            <input type="text" class="form-control" id="book-authors">
+                        </div>
+                        <div class="form-group">
+                            <label for="book-genres" class="col-form-label">Жанры (через запятую)</label>
+                            <input type="text" class="form-control" id="book-genres">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary" id="save-book">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade"
+         id="commentsModal"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="commentsModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="commentsModalLabel">
+                        Отзывы о книге <strong id="comment-by"></strong>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="email" class="col-form-label">Адрес электронной почты</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment" class="col-form-label">Отзыв</label>
+                            <input type="text" class="form-control" id="comment">
+                        </div>
+                        <button type="button" class="btn btn-primary" id="post-comment">Отправить</button>
+                    </form>
+                    <br/>
+                    <ul class="list-group list-group-flush" id="comments-area">
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="webjars/jquery/3.3.1/jquery.js"></script>
+<script src="webjars/bootstrap/4.1.3/js/bootstrap.js"></script>
+<script>
+    "use strict";
+
+    $.ajax({
+        url: "http://localhost:8080/books",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            var items = [];
+            $.each(data, function(i, item) {
+                let element = '<tr>'
+                        + '<td>'
+                            + '<button type="button" class="btn btn-link" onclick="viewBook(\'' + item.id + '\')">'
+                                + item.name
+                            + '</button>'
+                        + '</td>'
+                        + '<td>'
+                            + '<div class="btn-group" role="group">'
+                                + '<button type="button" class="btn btn-secondary" onclick="viewComments(\'' + item.id + '\', \'' + item.name + '\')">'
+                                    + 'Отзывы'
+                                + '</button>'
+                                + '<button type="button" class="btn btn-danger" onclick="deleteBook(\'' + item.id + '\')">'
+                                    + 'Удалить'
+                                + '</button>'
+                            + '</div>'
+                        + '</td>'
+                    + '</tr>';
+                items.push(element);
+            });
+            $('#books-list').append(items.join(''));
+        }
+    });
+
+    $("#book-name").on("input", function () {
+        if ($("#book-name").val() == '') {
+            $("#book-name").addClass("is-invalid");
+        } else {
+            $("#book-name").removeClass("is-invalid");
+        }
+    });
+
+    $("#create-book").click(function () {
+        $("#book-name").addClass("is-invalid");
+        $("#book-id").val(null);
+        $("#book-name").val(null);
+        $("#book-authors").val(null);
+        $("#book-genres").val(null);
+        $('#exampleModal').modal({
+            show: true
+        });
+    });
+
+    $("#save-book").click(function () {
+        if ($("#book-name").val() == '') {
+            return;
+        }
+        $.ajax({
+            url: "http://localhost:8080/books",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=UTF-8",
+            crossDomain: true,
+            data: JSON.stringify({
+                id: $("#book-id").val() != '' ? $("#book-id").val() : null,
+                name: $("#book-name").val(),
+                authors: $("#book-authors").val() != '' ? $("#book-authors").val().split(/,\s*/).map(function (value) {
+                    let parts = value.split(/\s+/);
+                    return {
+                        firstName: parts[0],
+                        lastName: parts[1]
+                    }
+                }) : null,
+                genres: $("#book-authors").val() != '' ? $("#book-genres").val().split(/,\s*/).map(function (value) {
+                    return {
+                        name: value
+                    }
+                }) : null
+            }),
+            success: function(data) {
+                location.reload();
+            }
+        });
+    });
+
+    function viewBook(id) {
+        $.ajax({
+            url: "http://localhost:8080/books/" + id,
+            type: "GET",
+            success: function(data) {
+                $("#book-name").removeClass("is-invalid");
+                $("#book-id").val(data.id);
+                $("#book-name").val(data.name);
+                $("#book-authors").val(data.authors.map(function (author) {
+                    return author.firstName + ' ' + author.lastName;
+                }).join(', '));
+                $("#book-genres").val(data.genres.map(function (genre) {
+                    return genre.name;
+                }).join(', '));
+                $('#exampleModal').modal({
+                    show: true
+                });
+            }
+        });
+    }
+
+    function viewComments(id, name) {
+        $('#comment-by').text(name);
+        $('#email').val(null);
+        $('#comment').val(null);
+        $('#post-comment').on('click', function () {
+            addComment(id);
+        });
+        renderComments(id);
+        $('#commentsModal').modal({
+            show: true
+        });
+    }
+
+    function addComment(bookId) {
+        $.ajax({
+            url: "http://localhost:8080/comments/" + bookId,
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=UTF-8",
+            crossDomain: true,
+            data: JSON.stringify({
+                email: $("#email").val(),
+                text: $("#comment").val()
+            }),
+            success: function(data) {
+                $('#email').val(null);
+                $('#comment').val(null);
+                renderComments(bookId);
+            }
+        });
+    }
+
+    function removeComment(bookId, email, text) {
+        $.ajax({
+            url: "http://localhost:8080/comments/" + bookId,
+            type: "DELETE",
+            dataType: "json",
+            contentType: "application/json; charset=UTF-8",
+            crossDomain: true,
+            data: JSON.stringify({
+                email: email,
+                text: text
+            }),
+            success: function(data) {
+                renderComments(bookId);
+            }
+        });
+    }
+
+    function renderComments(bookId) {
+        let commentsArea = $("#comments-area");
+        commentsArea.empty();
+
+        $.ajax({
+            url: "http://localhost:8080/books/" + bookId,
+            type: "GET",
+            success: function(book) {
+                book.comments.forEach(function (comment) {
+                    let email = comment.email;
+                    let text = comment.text;
+                    let element = '<li class="list-group-item">'
+                            + '<strong>' + email + '</strong>'
+                            + ' ' + text
+                            + '<button type="button" class="close" onclick="removeComment(\'' + bookId + '\',\'' + email + '\',\'' + text + '\')">'
+                                + '<span>&times;</span>'
+                            + '</button>'
+                        + '</li>';
+                    commentsArea.append(element);
+                });
+            }
+        });
+    }
+
+    function deleteBook(id) {
+        $.ajax({
+            url: "http://localhost:8080/books/" + id,
+            type: "DELETE",
+            success: function(data) {
+                location.reload();
+            }
+        });
+    }
+</script>
+</body>
+</html>

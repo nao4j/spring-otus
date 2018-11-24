@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create-genres-id-sq" author="ypilipenko">
+        <createSequence sequenceName="genres_id_sq"
+                        schemaName="otus_library"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="false"/>
+    </changeSet>
+
+    <changeSet id="create-genres-table" author="ypilipenko">
+        <createTable tableName="genres" schemaName="otus_library">
+            <column name="id" type="BIGINT" defaultValueSequenceNext="genres_id_sq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${book.name}">Трудно быть богом</title>
+</head>
+<body>
+<div th:replace="fragments/navibar :: navibar">Навигация</div>
+<h1 th:text="${book.name}">Трудно быть богом</h1>
+<h2>Авторы</h2>
+<ul th:each="author : ${book.authors}">
+    <li th:text="${author.firstName} + ' ' + ${author.lastName}">Аркадий Стругацкий</li>
+</ul>
+<h2>Жанры</h2>
+<ul th:each="genre : ${book.genres}">
+    <li th:text="${genre.name}">Научная фантастика</li>
+</ul>
+<h2>Комментарии</h2>
+<ul th:each="comment : ${book.comments}">
+    <li>
+        <table>
+            <tr>
+                <td th:text="${comment.email}">example@email.com</td>
+                <td th:text="${comment.text}">Хорошая книга!</td>
+                <td>
+                    <a th:href="@{/books/{bookId}/deleteComment(bookId=${book.id},email=${comment.email},text=${comment.text})}" href="book.html">
+                        x
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </li>
+</ul>
+<form id="comment-form" th:action="@{/books/{bookId}/addComment(bookId=${book.id})}" th:object="${comment}" action="#" method="post">
+    <div>
+        <label for="email-input">Email</label>
+        <input id="email-input" name="email" type="email"/>
+    </div>
+    <div>
+        <label for="text-input">Комментарий</label>
+        <input id="text-input" name="text" type="text"/>
+    </div>
+    <button type="submit">Отправить</button>
+</form>
+</body>
+</html>

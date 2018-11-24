@@ -1,0 +1,16 @@
+spring:
+  main:
+    banner-mode: log
+  datasource:
+    initialization-mode: always
+  liquibase:
+    default-schema: otus_library
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  jpa:
+    hibernate:
+      ddl-auto: validate
+logging:
+  level:
+    root: ERROR
+    console: OFF
+  file: debug.log

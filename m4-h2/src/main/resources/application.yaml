@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
